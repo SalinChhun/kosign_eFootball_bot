@@ -11,7 +11,8 @@ COPY . /app
 RUN gradle build
 
 # Runtime Stage - Use a smaller JRE image
-FROM openjdk:21-jre-alpine
+#FROM openjdk:21-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 # Set the working directory
 WORKDIR /app
