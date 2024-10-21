@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: telegram-bot
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kosign_eFootball_db
+    username: postgres
+    password: 123079
+  jpa:
+    hibernate:
+      ddl-auto: update
+telegram-setting:
+  enable: true
+  base-url: https://api.telegram.org
+  username: salin00_bot
+  access-token: 6984760978:AAHsyXH0reE-LGz4Hl8xgSWQ6fkqVn0kgrI
