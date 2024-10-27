@@ -2,7 +2,7 @@ spring:
   application:
     name: telegram-bot
   datasource:
-    url: jdbc:postgresql://localhost:5432/kosign_eFootball_db
+    url: jdbc:postgresql://localhost:5432/kosign_efootball_db
     username: postgres
     password: 123079
   jpa:
@@ -13,3 +13,9 @@ telegram-setting:
   base-url: https://api.telegram.org
   username: salin00_bot
   access-token: 6984760978:AAHsyXH0reE-LGz4Hl8xgSWQ6fkqVn0kgrI
+
+chatgpt:
+  model: gpt-3.5-turbo
+  api:
+    url: https://api.openai.com/v1/chat/completions
+    key: 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
