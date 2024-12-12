@@ -1,14 +1,13 @@
 package com.salin.kosign_eFootball_bot;
 
 import com.salin.kosign_eFootball_bot.config.InMemoryMultipartFile;
-import com.salin.kosign_eFootball_bot.services.GeminiAIService;
+import com.salin.kosign_eFootball_bot.services.GeminiRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.GetFile;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
@@ -28,7 +27,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 //    private PhotoRepository repository;
 
     @Autowired
-    private GeminiAIService geminiAIService;
+    private GeminiRestService geminiAIService;
 
     @Value("${telegram-setting.username}")
     private String telegramBotUsername;
@@ -68,25 +67,6 @@ public class TelegramBot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }
-
-
-
-//        System.err.println("cmd "+ cmd);
-//        var p = repository.findByCmd(cmd);
-//        if (p!=null){
-//            sendImageFromUrl(chatId, p.getImageUrl());
-//        }else
-//        if(cmd.equals("/confess")){
-//            SendMessage message=new SendMessage();
-//            message.setText("Do it now!!");
-//            message.setChatId(chatId);
-//
-//            try {
-//                execute(message);
-//            } catch (TelegramApiException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
 
     }
 

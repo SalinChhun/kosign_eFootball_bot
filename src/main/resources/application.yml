@@ -2,7 +2,7 @@ spring:
   application:
     name: telegram-bot
   datasource:
-    url: jdbc:postgresql://localhost:5432/kosign_efootball_db
+    url: jdbc:postgresql://localhost:5432/kosign_eFootball_db
     username: postgres
     password: 123079
   jpa:
@@ -20,3 +20,4 @@ gemini:
     project-id: kosignefootballbot
     location: us-central1
     modelName: gemini-1.5-flash
+    api-key: AIzaSyCiSPyc7X0AXq921IGi9-0J5E0doA6b9m8

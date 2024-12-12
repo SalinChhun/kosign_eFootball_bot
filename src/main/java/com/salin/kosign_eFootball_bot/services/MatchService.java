@@ -2,12 +2,11 @@ package com.salin.kosign_eFootball_bot.services;
 
 
 import com.salin.kosign_eFootball_bot.api.StatusCode;
-import com.salin.kosign_eFootball_bot.domain.Match;
+import com.salin.kosign_eFootball_bot.domain.MatchResult;
 import com.salin.kosign_eFootball_bot.domain.Team;
 import com.salin.kosign_eFootball_bot.exception.BusinessException;
 import com.salin.kosign_eFootball_bot.exception.EntityNotFoundException;
 import com.salin.kosign_eFootball_bot.payload.MatchRequest;
-import com.salin.kosign_eFootball_bot.payload.MatchResponse;
 import com.salin.kosign_eFootball_bot.repository.MatchRepository;
 import com.salin.kosign_eFootball_bot.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +38,15 @@ public class MatchService {
         }
 
         // Create new match
-        Match match = new Match();
-        match.setHomeTeam(homeTeam);
-        match.setAwayTeam(awayTeam);
-        match.setMatchDate(LocalDateTime.now());
-        match.setHomeScore(request.getHomeScore());
-        match.setAwayScore(request.getAwayScore());
+//        MatchResult match = new MatchResult();
+//        match.setHomeTeam(homeTeam);
+//        match.setAwayTeam(awayTeam);
+//        match.setMatchDate(LocalDateTime.now());
+//        match.setHomeScore(request.getHomeScore());
+//        match.setAwayScore(request.getAwayScore());
 
         // Save match
-        matchRepository.save(match);
+        matchRepository.save(null);
 
     }
 
