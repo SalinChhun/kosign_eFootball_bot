@@ -1,5 +1,6 @@
 package com.salin.kosign_eFootball_bot.domain;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,6 @@ public class MatchResult {
     @JoinColumn(name = "away_team_id")
     private Team awayTeam;
 
-    @Column(nullable = false)
     private LocalDateTime matchDate;
 
     @Column(nullable = false)
@@ -141,5 +141,9 @@ public class MatchResult {
         this.awayTackles = awayTackles;
         this.homeSaves = homeSaves;
         this.awaySaves = awaySaves;
+    }
+
+    public MatchResult() {
+
     }
 }

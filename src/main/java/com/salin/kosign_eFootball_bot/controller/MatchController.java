@@ -1,7 +1,7 @@
 package com.salin.kosign_eFootball_bot.controller;
 
 import com.salin.kosign_eFootball_bot.payload.MatchRequest;
-import com.salin.kosign_eFootball_bot.services.MatchService;
+import com.salin.kosign_eFootball_bot.services.MatchResultService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MatchController extends KosignEfootballBotResController{
 
-    private final MatchService matchService;
+    private final MatchResultService matchService;
 
     @PostMapping()
     public ResponseEntity<?> createMatch(@RequestBody MatchRequest matchRequest) {
-        matchService.createMatch(matchRequest);
+//        matchService.createMatch(matchRequest);
         return ok();
     }
 

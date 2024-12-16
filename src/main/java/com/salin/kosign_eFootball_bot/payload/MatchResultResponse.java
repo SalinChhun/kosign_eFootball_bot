@@ -18,8 +18,6 @@ public class MatchResultResponse {
     
     private String awayTeam = "";
     
-    private LocalDateTime matchDate;
-    
     private String homeScore = "";
     
     private String awayScore = "";
@@ -77,10 +75,9 @@ public class MatchResultResponse {
     private String awaySaves = "";
 
     @Builder
-    public MatchResultResponse(String homeTeam, String awayTeam, LocalDateTime matchDate, String homeScore, String awayScore, String homePossession, String awayPossession, String homeShots, String awayShots, String homeShotsOnTarget, String awayShotsOnTarget, String homeFouls, String awayFouls, String homeOffsides, String awayOffsides, String homeCornerKicks, String awayCornerKicks, String homeFreeKicks, String awayFreeKicks, String homePasses, String awayPasses, String homeSuccessfulPasses, String awaySuccessfulPasses, String homeCrosses, String awayCrosses, String homeInterceptions, String awayInterceptions, String homeTackles, String awayTackles, String homeSaves, String awaySaves) {
+    public MatchResultResponse(String homeTeam, String awayTeam, String homeScore, String awayScore, String homePossession, String awayPossession, String homeShots, String awayShots, String homeShotsOnTarget, String awayShotsOnTarget, String homeFouls, String awayFouls, String homeOffsides, String awayOffsides, String homeCornerKicks, String awayCornerKicks, String homeFreeKicks, String awayFreeKicks, String homePasses, String awayPasses, String homeSuccessfulPasses, String awaySuccessfulPasses, String homeCrosses, String awayCrosses, String homeInterceptions, String awayInterceptions, String homeTackles, String awayTackles, String homeSaves, String awaySaves) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.matchDate = matchDate;
         this.homeScore = homeScore;
         this.awayScore = awayScore;
         this.homePossession = homePossession;
