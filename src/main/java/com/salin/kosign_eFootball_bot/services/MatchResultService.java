@@ -1,6 +1,7 @@
 package com.salin.kosign_eFootball_bot.services;
 
 
+import com.salin.kosign_eFootball_bot.TelegramBot;
 import com.salin.kosign_eFootball_bot.api.StatusCode;
 import com.salin.kosign_eFootball_bot.domain.MatchResult;
 import com.salin.kosign_eFootball_bot.domain.Team;
@@ -10,6 +11,8 @@ import com.salin.kosign_eFootball_bot.payload.MatchRequest;
 import com.salin.kosign_eFootball_bot.payload.MatchResultResponse;
 import com.salin.kosign_eFootball_bot.repository.MatchResultRepository;
 import com.salin.kosign_eFootball_bot.repository.TeamRepository;
+import com.salin.kosign_eFootball_bot.utils.AppLogManager;
+import com.salin.kosign_eFootball_bot.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,15 @@ public class MatchResultService {
     private final TeamRepository teamRepository;
 
     public boolean createMatchResult(MatchResultResponse matchResultRequest) {
+
+        // write log request
+        StringBuilder logRequest = new StringBuilder();
+        logRequest.append("\n[Request]")
+                .append("\n[Url] [POST ").append(TelegramBot.class).append("]")
+                .append("\n[Body] [")
+                .append(ObjectUtils.writerWithDefaultPrettyPrinter(matchResultRequest))
+                .append("]\n");
+        AppLogManager.info(TelegramBot.class, logRequest);
 
 
         // Find home team

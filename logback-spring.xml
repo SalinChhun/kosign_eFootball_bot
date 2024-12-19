@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true">
+    <property name="APP_LOGS_URL" value="logs"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--    TODO 1: WeSoccer.LOG-->
+    <appender name="LOGS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOGS_URL}/apps.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${APP_LOGS_URL}/archived/wesoccer.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>100MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1} [%t] (%msg) %n</pattern>
+        </encoder>
+    </appender>
+
+    <!--    TODO 1: WESOCCER-->
+    <logger name="com.salin.kosign_eFootball_bot.services.log.WeSoccerLoggingService" level="debug" additivity="false">
+        <springProfile name="local">
+            <appender-ref ref="CONSOLE"/>
+        </springProfile>
+        <appender-ref ref="LOGS"/>
+    </logger>
+
+
+    <!--    TODO 5: TELEGRAM.LOG-->
+    <appender name="TELEGRAM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOGS_URL}/telegram.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${APP_LOGS_URL}/archived/telegram.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>100MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--    TODO 5: TELEGRAM-->
+    <logger name="com.salin.kosign_eFootball_bot.TelegramBot" level="debug" additivity="false">
+        <springProfile name="local">
+            <appender-ref ref="CONSOLE"/>
+        </springProfile>
+        <appender-ref ref="TELEGRAM"/>
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

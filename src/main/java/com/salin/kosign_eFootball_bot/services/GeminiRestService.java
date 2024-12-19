@@ -3,7 +3,10 @@ package com.salin.kosign_eFootball_bot.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.salin.kosign_eFootball_bot.TelegramBot;
 import com.salin.kosign_eFootball_bot.payload.MatchResultResponse;
+import com.salin.kosign_eFootball_bot.utils.AppLogManager;
+import com.salin.kosign_eFootball_bot.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -106,7 +109,9 @@ public class GeminiRestService {
     }
 
     public static Optional<MatchResultResponse> extractMatchResult(String jsonString) throws JsonProcessingException {
-        System.err.println("Response from AI: " + jsonString);
+
+        // write log response from gemini
+        AppLogManager.info(TelegramBot.class, "\n[Response Data From Gemini] \n" + ObjectUtils.writeValueAsSingleLineString(jsonString) + "\n");
 
         jsonString = preprocessJson(jsonString);
 

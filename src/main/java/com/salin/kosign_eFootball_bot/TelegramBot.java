@@ -4,6 +4,8 @@ import com.salin.kosign_eFootball_bot.config.InMemoryMultipartFile;
 import com.salin.kosign_eFootball_bot.payload.MatchResultResponse;
 import com.salin.kosign_eFootball_bot.services.GeminiRestService;
 import com.salin.kosign_eFootball_bot.services.MatchResultService;
+import com.salin.kosign_eFootball_bot.utils.AppLogManager;
+import com.salin.kosign_eFootball_bot.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -74,6 +76,8 @@ public class TelegramBot extends TelegramLongPollingBot {
 
                         if (isSaveMatchResult && caption.equalsIgnoreCase("insert")) {
                             sendMessage(chatId, teamResponse.get());
+                            // write log response
+                            AppLogManager.info(TelegramBot.class, "\n[Response] \n" + ObjectUtils.writeValueAsSingleLineString(teamResponse.get()) + "\n");
                         } else {
                             sendErrorMessage(chatId, "error");
                         }

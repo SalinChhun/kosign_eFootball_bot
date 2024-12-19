@@ -1,0 +1,105 @@
+spring:
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:5432/kosign_eFootball_db
+    username: postgres
+    password: 123079
+  jpa:
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+  quartz:
+    job-store-type: jdbc
+    wait-for-jobs-to-complete-on-shutdown: true #Closing is waiting for the task to complete
+    overwrite-existing-jobs: true #Can overwrite existing tasks
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: scheduler #scheduler instance name
+            instanceId: AUTO #The scheduler instance ID is automatically generated
+          jobStore:
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore #Scheduling information storage and processing class
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            tablePrefix: qrtz_ #quartz related table prefix
+            useProperties: false #Whether to convert the attributes in the JobDataMap to string storage
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10 #Set the number of concurrent threads
+            threadPriority: 5 #Set the priority of the thread
+    jdbc:
+      initialize-schema: never #change to always to init schema and then change to never
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  mail:
+    base-url: http://localhost:3000/bills/payments?id=
+    host: mx1.wecambodia.com
+    from-address: noreply@webill365.vn
+    port: 587
+    username: ksga
+    password: K$9aZAtW#XM202#
+    properties:
+      smtp:
+        auth: true
+        starttls:
+          enable: false
+          required: false
+  thymeleaf:
+    cache: false
+
+file:
+  server-path: D:/upload-files/
+  client-path: /api/v1/image
+  base-url: http://localhost:8080${file.client-path}
+  base-image-url: http://localhost:8080
+
+logging:
+  level:
+    root: info
+#    org.springframework.security: trace
+    org.hibernate: info
+    org.hibernate.SQL: debug
+    org.springframework.jdbc.core: trace
+
+telegram-setting:
+  enable: true
+  base-url: https://api.telegram.org
+  username: salin00_bot
+  access-token: 6984760978:AAHsyXH0reE-LGz4Hl8xgSWQ6fkqVn0kgrI
+
+gemini:
+  api:
+    project-id: kosignefootballbot
+    location: us-central1
+    modelName: gemini-1.5-flash
+    api-key: AIzaSyCiSPyc7X0AXq921IGi9-0J5E0doA6b9m8
+
+otp-setting:
+  expired-time: 60  # in seconds
+  disabled-five-minutes: 5 # in minutes
+  disabled-fifteen-minutes: 15 # in minutes
+  limit-send: 5 # 5times per day
+  max-send: 50 # 50times per day
+
+#bank-setting:
+#  code: SHBV
+#  name: Shinhan Bank
+#  cc: aoengsothea9999999@gmail.com, senvysal.kh@gmail.com
+#  from: laybunnavitou@kosign.com.kh
+#  to: songchanmoni098@gmail.com
+#  subject: New WeBill365 Parent Account
+#  content-body: Dear Sir/Madam, <br><br> We are requesting you to Trust account for settlement on WeBill365. Please kindly check below information
+#  content-end: Please let us know if further detail are required. <br><br> Best regards, <br> Lay Bunnavitou <br> Business Development Manager
+
+#trial-version:
+#  free-period: 0 # days
+
