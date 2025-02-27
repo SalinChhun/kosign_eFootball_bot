@@ -1,9 +1,9 @@
 package com.salin.kosign_eFootball_bot.security.config;
 
-import com.salin.kosign_eFootball_bot.api.ApiResponse;
-import com.salin.kosign_eFootball_bot.api.ApiStatus;
-import com.salin.kosign_eFootball_bot.api.EmptyJsonResponse;
-import com.salin.kosign_eFootball_bot.api.StatusCode;
+import com.salin.kosign_eFootball_bot.common.api.ApiResponse;
+import com.salin.kosign_eFootball_bot.common.api.ApiStatus;
+import com.salin.kosign_eFootball_bot.common.api.EmptyJsonResponse;
+import com.salin.kosign_eFootball_bot.common.api.StatusCode;
 import com.salin.kosign_eFootball_bot.utils.ObjectUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

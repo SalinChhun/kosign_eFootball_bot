@@ -1,9 +1,9 @@
 package com.salin.kosign_eFootball_bot.controller;
-import com.salin.kosign_eFootball_bot.api.EmptyJsonResponse;
-import com.salin.kosign_eFootball_bot.api.StatusCode;
+import com.salin.kosign_eFootball_bot.common.api.EmptyJsonResponse;
+import com.salin.kosign_eFootball_bot.common.api.StatusCode;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import com.salin.kosign_eFootball_bot.api.ApiResponse;
+import com.salin.kosign_eFootball_bot.common.api.ApiResponse;
 import org.springframework.http.ResponseEntity;
 
 public class KosignEfootballBotResController<T> {

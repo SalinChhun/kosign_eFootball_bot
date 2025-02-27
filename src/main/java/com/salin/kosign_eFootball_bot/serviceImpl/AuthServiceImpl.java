@@ -1,7 +1,7 @@
 package com.salin.kosign_eFootball_bot.serviceImpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.salin.kosign_eFootball_bot.api.StatusCode;
+import com.salin.kosign_eFootball_bot.common.api.StatusCode;
 import com.salin.kosign_eFootball_bot.domain.User;
 import com.salin.kosign_eFootball_bot.exception.BusinessException;
 import com.salin.kosign_eFootball_bot.payload.auth.LoginRequest;

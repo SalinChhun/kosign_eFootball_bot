@@ -2,12 +2,11 @@ package com.salin.kosign_eFootball_bot.services;
 
 
 import com.salin.kosign_eFootball_bot.TelegramBot;
-import com.salin.kosign_eFootball_bot.api.StatusCode;
+import com.salin.kosign_eFootball_bot.common.api.StatusCode;
 import com.salin.kosign_eFootball_bot.domain.MatchResult;
 import com.salin.kosign_eFootball_bot.domain.Team;
 import com.salin.kosign_eFootball_bot.exception.BusinessException;
 import com.salin.kosign_eFootball_bot.exception.EntityNotFoundException;
-import com.salin.kosign_eFootball_bot.payload.MatchRequest;
 import com.salin.kosign_eFootball_bot.payload.MatchResultResponse;
 import com.salin.kosign_eFootball_bot.repository.MatchResultRepository;
 import com.salin.kosign_eFootball_bot.repository.TeamRepository;
@@ -17,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

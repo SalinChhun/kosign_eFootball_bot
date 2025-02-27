@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.salin.kosign_eFootball_bot.api.Pagination;
+import com.salin.kosign_eFootball_bot.common.Pagination;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Page;

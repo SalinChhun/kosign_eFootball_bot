@@ -1,4 +1,4 @@
-package com.salin.kosign_eFootball_bot.api;
+package com.salin.kosign_eFootball_bot.common.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

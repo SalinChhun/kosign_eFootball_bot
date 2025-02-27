@@ -1,9 +1,9 @@
 package com.salin.kosign_eFootball_bot.exception;
 
-import com.salin.kosign_eFootball_bot.api.ApiResponse;
-import com.salin.kosign_eFootball_bot.api.ApiStatus;
-import com.salin.kosign_eFootball_bot.api.EmptyJsonResponse;
-import com.salin.kosign_eFootball_bot.api.StatusCode;
+import com.salin.kosign_eFootball_bot.common.api.ApiResponse;
+import com.salin.kosign_eFootball_bot.common.api.ApiStatus;
+import com.salin.kosign_eFootball_bot.common.api.EmptyJsonResponse;
+import com.salin.kosign_eFootball_bot.common.api.StatusCode;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
@@ -28,8 +28,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.net.ConnectException;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;

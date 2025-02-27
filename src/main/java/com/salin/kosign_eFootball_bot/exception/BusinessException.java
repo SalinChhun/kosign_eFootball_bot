@@ -1,6 +1,6 @@
 package com.salin.kosign_eFootball_bot.exception;
 
-import com.salin.kosign_eFootball_bot.api.StatusCode;
+import com.salin.kosign_eFootball_bot.common.api.StatusCode;
 
 /**
  * Handle exception for Business Exception

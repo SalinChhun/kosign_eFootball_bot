@@ -1,4 +1,4 @@
-package com.salin.kosign_eFootball_bot.api;
+package com.salin.kosign_eFootball_bot.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
