@@ -9,6 +9,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: salinchhun123079@gmail.com
+    password: atmd nzxr vqqs qxwq
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
   servlet:
     multipart:
       max-file-size: 10MB
@@ -40,19 +51,6 @@ spring:
     username: guest
     password: guest
 
-  mail:
-    base-url: http://localhost:3000/bills/payments?id=
-    host: mx1.wecambodia.com
-    from-address: noreply@webill365.vn
-    port: 587
-    username: ksga
-    password: K$9aZAtW#XM202#
-    properties:
-      smtp:
-        auth: true
-        starttls:
-          enable: false
-          required: false
   thymeleaf:
     cache: false
 
@@ -90,6 +88,13 @@ otp-setting:
   limit-send: 5 # 5times per day
   max-send: 50 # 50times per day
 
+application:
+  security:
+    jwt:
+      secret-key: 0f2f80a24f16da8197bedd954f4690b52818482166dcf2bca750c4dcc514ec20
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
 #bank-setting:
 #  code: SHBV
 #  name: Shinhan Bank

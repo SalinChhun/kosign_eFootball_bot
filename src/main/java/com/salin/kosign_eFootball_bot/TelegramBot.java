@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -67,11 +68,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
                 // Create a MultipartFile implementation
                 MultipartFile multipartFile = new InMemoryMultipartFile(file.getFilePath(), imageBytes, photo.getFileSize(), file.getFilePath());
-
                 // Process the image with GeminiAIService
                 if (caption != null) {
                     var teamResponse = geminiAIService.predictImage(multipartFile);
-                    if (teamResponse.isPresent()) {
+                    if (Objects.nonNull(teamResponse)) {
                         var isSaveMatchResult = matchResultService.createMatchResult(teamResponse.get());
 
                         if (isSaveMatchResult && caption.equalsIgnoreCase("insert")) {
