@@ -1,14 +1,9 @@
 package com.salin.kosign_eFootball_bot.payload;
 
 
-import com.salin.kosign_eFootball_bot.domain.Team;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter

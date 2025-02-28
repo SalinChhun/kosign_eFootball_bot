@@ -1,6 +1,5 @@
 package com.salin.kosign_eFootball_bot.domain;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +14,11 @@ public class MatchResult {
 
     @ManyToOne
     @JoinColumn(name = "home_team_id")
-    private Team homeTeam;
+    private Club homeTeam;
 
     @ManyToOne
     @JoinColumn(name = "away_team_id")
-    private Team awayTeam;
+    private Club awayTeam;
 
     private LocalDateTime matchDate;
 
@@ -108,7 +107,7 @@ public class MatchResult {
     private Integer awaySaves = 0;
 
     @Builder
-    public MatchResult(Long id, Team homeTeam, Team awayTeam, LocalDateTime matchDate, Integer homeScore, Integer awayScore, String homePossession, String awayPossession, Integer homeShots, Integer awayShots, Integer homeShotsOnTarget, Integer awayShotsOnTarget, Integer homeFouls, Integer awayFouls, Integer homeOffsides, Integer awayOffsides, Integer homeCornerKicks, Integer awayCornerKicks, Integer homeFreeKicks, Integer awayFreeKicks, Integer homePasses, Integer awayPasses, Integer homeSuccessfulPasses, Integer awaySuccessfulPasses, Integer homeCrosses, Integer awayCrosses, Integer homeInterceptions, Integer awayInterceptions, Integer homeTackles, Integer awayTackles, Integer homeSaves, Integer awaySaves) {
+    public MatchResult(Long id, Club homeTeam, Club awayTeam, LocalDateTime matchDate, Integer homeScore, Integer awayScore, String homePossession, String awayPossession, Integer homeShots, Integer awayShots, Integer homeShotsOnTarget, Integer awayShotsOnTarget, Integer homeFouls, Integer awayFouls, Integer homeOffsides, Integer awayOffsides, Integer homeCornerKicks, Integer awayCornerKicks, Integer homeFreeKicks, Integer awayFreeKicks, Integer homePasses, Integer awayPasses, Integer homeSuccessfulPasses, Integer awaySuccessfulPasses, Integer homeCrosses, Integer awayCrosses, Integer homeInterceptions, Integer awayInterceptions, Integer homeTackles, Integer awayTackles, Integer homeSaves, Integer awaySaves) {
         this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;

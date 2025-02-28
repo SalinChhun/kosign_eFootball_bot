@@ -65,13 +65,7 @@ public class SecurityConfiguration {
                                         "/swagger-ui.html"
                                 ).permitAll()
                                 .requestMatchers(
-                                        "api/v1/brand/**",
-                                        "api/v1/model/**",
-                                        "api/v1/color/**",
-                                        "api/v1/product/**",
-                                        "api/v1/reports/**",
-                                        "api/v1/sales/**",
-                                        "api/v1/users/**"
+                                        "/api/v1/users/**"
                                 ).authenticated()
                                 .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
                                 .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
@@ -79,6 +73,13 @@ public class SecurityConfiguration {
                                 .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
                                 .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
                                 .requestMatchers(DELETE, "/api/v1/admin/**").hasAnyAuthority(ADMIN_DELETE.getPermission())
+
+                                .requestMatchers("/api/v1/season").hasAnyRole(ADMIN.name(), MANAGER.name())
+                                .requestMatchers(GET, "/api/v1/season/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
+                                .requestMatchers(POST, "/api/v1/season/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
+                                .requestMatchers(PUT, "/api/v1/season/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
+                                .requestMatchers(DELETE, "/api/v1/season/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
+
                                 .anyRequest()
                                 .authenticated()
                 )

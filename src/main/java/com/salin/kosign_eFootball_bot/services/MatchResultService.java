@@ -4,7 +4,7 @@ package com.salin.kosign_eFootball_bot.services;
 import com.salin.kosign_eFootball_bot.TelegramBot;
 import com.salin.kosign_eFootball_bot.common.api.StatusCode;
 import com.salin.kosign_eFootball_bot.domain.MatchResult;
-import com.salin.kosign_eFootball_bot.domain.Team;
+import com.salin.kosign_eFootball_bot.domain.Club;
 import com.salin.kosign_eFootball_bot.exception.BusinessException;
 import com.salin.kosign_eFootball_bot.exception.EntityNotFoundException;
 import com.salin.kosign_eFootball_bot.payload.MatchResultResponse;
@@ -37,12 +37,12 @@ public class MatchResultService {
 
 
         // Find home team
-        Team homeTeam = teamRepository.findTeamByName(matchResultRequest.getHomeTeam())
-                .orElseThrow(() -> new EntityNotFoundException(Team.class, "name", matchResultRequest.getHomeTeam()));
+        Club homeTeam = teamRepository.findTeamByName(matchResultRequest.getHomeTeam())
+                .orElseThrow(() -> new EntityNotFoundException(Club.class, "name", matchResultRequest.getHomeTeam()));
 
         // Find away team
-        Team awayTeam = teamRepository.findTeamByName(matchResultRequest.getAwayTeam())
-                .orElseThrow(() -> new EntityNotFoundException(Team.class, "name", matchResultRequest.getAwayTeam()));
+        Club awayTeam = teamRepository.findTeamByName(matchResultRequest.getAwayTeam())
+                .orElseThrow(() -> new EntityNotFoundException(Club.class, "name", matchResultRequest.getAwayTeam()));
 
         // Validate teams are different
         if (homeTeam.getId().equals(awayTeam.getId())) {

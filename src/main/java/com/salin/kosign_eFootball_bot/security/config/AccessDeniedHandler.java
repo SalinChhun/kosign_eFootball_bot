@@ -20,10 +20,7 @@ import java.io.IOException;
 @Component
 public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler{
     @Override
-    public void handle(HttpServletRequest request,
-                       HttpServletResponse response,
-                       AccessDeniedException accessDeniedException
-    ) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         try (ServletServerHttpResponse res = new ServletServerHttpResponse(response)) {
             res.setStatusCode(HttpStatus.FORBIDDEN);
             res.getServletResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
