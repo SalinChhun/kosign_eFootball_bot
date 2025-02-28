@@ -24,18 +24,18 @@ public class SeasonController extends KosignEfootballBotResController{
         return ok(seasonService.getSeasons());
     }
 
-    @PutMapping("/season")
+    @PutMapping("/season/{seasonId}")
     public ResponseEntity<?> updateSeason(
-            @RequestParam(value = "season_id", required = false) Long seasonId,
+            @PathVariable Long seasonId,
             @RequestParam(value = "season_name", required = false) String seasonName
     ) {
         seasonService.updateSeason(seasonId, seasonName);
         return ok();
     }
 
-    @DeleteMapping("/season")
+    @DeleteMapping("/season/{seasonId}")
     public ResponseEntity<?> deleteSeason(
-            @RequestParam(value = "season_id", required = false) Long seasonId
+            @PathVariable Long seasonId
     ) {
         seasonService.deleteSeason(seasonId);
         return ok();
