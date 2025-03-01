@@ -14,10 +14,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.GetFile;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.objects.File;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
-import org.telegram.telegrambots.meta.api.objects.PhotoSize;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
@@ -48,6 +45,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         String chatId = update.getMessage().getChatId().toString();
         String cmd = update.getMessage().getText();
+        if (cmd != null) {
+            // close friend message
+            closeFriendMessage(chatId, cmd);
+            System.err.println("cmd"+cmd);
+        }
 
 
         if (update.hasMessage() && update.getMessage().hasPhoto()) {
@@ -55,7 +57,6 @@ public class TelegramBot extends TelegramLongPollingBot {
             PhotoSize photo = photos.get(photos.size() - 1); // Get the largest photo
             String fileId = photo.getFileId();
             String caption = update.getMessage().getCaption();
-
             try {
                 // First, get the file object
                 File file = execute(new GetFile(fileId));
@@ -89,6 +90,8 @@ public class TelegramBot extends TelegramLongPollingBot {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            System.err.println("No photo message received.");
         }
 
     }
@@ -256,6 +259,59 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         return telegramAccessToken;
+    }
+
+    public void closeFriendMessage(String chatId, String message) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+
+        if (message.equalsIgnoreCase("/salin")) {
+            sendMessage.setText("គាត់នឹងស្មោះណាស់");
+        } else if (message.equalsIgnoreCase("/kakada")) {
+            sendMessage.setText("គាត់នឹងសាវ៉ាណាស់");
+        } else if (message.equalsIgnoreCase("/chealy")) {
+            sendMessage.setText("គាត់នឹងក៏សាវ៉ាណាស់");
+        } else if (message.equalsIgnoreCase("/phally")) {
+            sendMessage.setText("មិត្តភក្តិគាត់ស្អាតៗណាស់អែបៗគាត់ទៅចាំគាត់នែនាំ\uD83D\uDE02");
+        } else if (message.contains("/ask")) {
+            String textPrompt = message.replace("/ask", "").trim();
+            String aiResponseJson = geminiAIService.sendMessage(textPrompt); // Get the AI response as JSON string
+
+            try {
+                // Manually extract the text from the JSON response
+                String searchString = "\"text\": \"";
+                int startIndex = aiResponseJson.indexOf(searchString);
+
+                if (startIndex != -1) {
+                    startIndex += searchString.length(); // Move to the end of the search string
+                    int endIndex = aiResponseJson.indexOf("\"", startIndex); // Find the closing quote
+
+                    if (endIndex != -1) {
+                        String aiTextResponse = aiResponseJson.substring(startIndex, endIndex);
+
+                        // Remove all newline characters from the response
+                        aiTextResponse = aiTextResponse.replace("\n", ""); // Remove newlines
+                        aiTextResponse = aiTextResponse.replace("\r", ""); // Remove carriage returns, if needed
+
+                        sendMessage.setText(aiTextResponse);
+                    } else {
+                        sendMessage.setText("Error: Closing quote not found in AI response.");
+                    }
+                } else {
+                    sendMessage.setText("Error: 'text' field not found in AI response.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                sendMessage.setText("Error processing AI response.");
+            }
+        }
+
+        // Send the message using your Telegram bot's API
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
     }
 }
 

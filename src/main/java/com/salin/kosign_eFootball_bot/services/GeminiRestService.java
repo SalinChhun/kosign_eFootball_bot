@@ -201,4 +201,45 @@ public class GeminiRestService {
                 .replaceAll("\\s*\"\\s*,\\s*\"", "\",\"");
     }
 
+
+    // New method to send a message
+    public String sendMessage(String textPrompt) {
+        try {
+            // Prepare request body
+            // Create the inner map for the "parts"
+            Map<String, Object> part = new HashMap<>();
+            part.put("text", textPrompt);
+
+            // Create a list to hold the "parts"
+            List<Map<String, Object>> partsList = new ArrayList<>();
+            partsList.add(part);
+
+            // Create the outer map for "contents"
+            Map<String, Object> content = new HashMap<>();
+            content.put("parts", partsList);
+
+            // Create a list to hold the "contents"
+            List<Map<String, Object>> contentsList = new ArrayList<>();
+            contentsList.add(content);
+
+            // Create the final message data map
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("contents", contentsList);
+
+            // Make API call to send the message
+
+            return webClient.post()
+                    .uri(uriBuilder -> uriBuilder.queryParam("key", apiKey).build())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(requestBody) // Use messageData instead of requestBody
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error sending message: " + e.getMessage();
+        }
+    }
+
 }
