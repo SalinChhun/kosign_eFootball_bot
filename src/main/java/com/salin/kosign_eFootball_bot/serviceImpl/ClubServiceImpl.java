@@ -4,9 +4,7 @@ import com.salin.kosign_eFootball_bot.domain.Club;
 import com.salin.kosign_eFootball_bot.domain.ClubSeason;
 import com.salin.kosign_eFootball_bot.domain.Season;
 import com.salin.kosign_eFootball_bot.exception.EntityNotFoundException;
-import com.salin.kosign_eFootball_bot.payload.club.ClubRequest;
-import com.salin.kosign_eFootball_bot.payload.club.IGetClubResponse;
-import com.salin.kosign_eFootball_bot.payload.club.UpdateClubRequest;
+import com.salin.kosign_eFootball_bot.payload.club.*;
 import com.salin.kosign_eFootball_bot.repository.ClubRepository;
 import com.salin.kosign_eFootball_bot.repository.ClubSeasonRepository;
 import com.salin.kosign_eFootball_bot.repository.SeasonRepository;
@@ -15,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -54,14 +53,34 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public List<IGetClubResponse> getClubs(Long seasonId, String clubName) {
+    public List<ClubResponse> getClubs(Long seasonId, String clubName) {
         try {
-            return clubRepository.findAllBySeasonId(seasonId, clubName);
+            // TODO: Get all clubs matching the filter criteria
+            var iclubs = clubRepository.findAllClubsBySeasonId(seasonId, clubName);
+            var clubs = iclubs.stream().map(club -> {
+
+                // TODO: For each club, fetch its associated seasons
+                var iseasons = clubRepository.findSeasonsByClubId(club.getClubId());
+                var seasons = iseasons.stream().map(season->
+                        SeasonResponse.builder()
+                        .seasonId(season.getSeasonId())
+                        .seasonName(season.getSeasonName())
+                        .build()).toList();
+
+                return ClubResponse.builder()
+                        .id(club.getClubId())
+                        .name(club.getClubName())
+                        .image(club.getClubLogo())
+                        .seasons(seasons)
+                        .build();
+            }).toList();
+
+            return clubs;
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error: " + e.getMessage());
+            return Collections.emptyList();
         }
-        return null;
     }
 
     @Override

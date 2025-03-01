@@ -2,6 +2,7 @@ package com.salin.kosign_eFootball_bot.repository;
 
 import com.salin.kosign_eFootball_bot.domain.Club;
 import com.salin.kosign_eFootball_bot.payload.club.IGetClubResponse;
+import com.salin.kosign_eFootball_bot.payload.club.IGetSeasonResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface ClubRepository extends JpaRepository<Club, Long> {
 
-    @Query(value = """
+    /*@Query(value = """
     SELECT
         c.id,
         c.name,
@@ -32,7 +33,19 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
     AND (COALESCE(?2, '') = '' OR c.name ilike CONCAT('%', ?2, '%'))
     GROUP BY c.id
     """, nativeQuery = true)
-    List<IGetClubResponse> findAllBySeasonId(Long seasonId, String clubName);
+    List<IGetClubResponse> findAllBySeasonId(Long seasonId, String clubName);*/
+
+    @Query(value = "SELECT c.id, c.name, c.image FROM club c " +
+            "LEFT JOIN club_season cs on c.id = cs.club_id " +
+            "WHERE ((?1 IS NULL) OR cs.season_id IN (?1)) " +
+            "AND (COALESCE(?2, '') = '' OR c.name ilike CONCAT('%', ?2, '%')) " +
+            "GROUP BY c.id", nativeQuery = true)
+    List<IGetClubResponse> findAllClubsBySeasonId(Long seasonId, String clubName);
+
+    @Query(value = "SELECT s.id as season_id, s.name as season_name FROM club_season cs " +
+            "JOIN season s ON cs.season_id = s.id " +
+            "WHERE cs.club_id = ?1", nativeQuery = true)
+    List<IGetSeasonResponse> findSeasonsByClubId(Long clubId);
 
 
 }
