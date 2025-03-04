@@ -8,4 +8,5 @@ import java.util.List;
 public interface ClubSeasonRepository extends JpaRepository<ClubSeason, Long> {
 
     List<ClubSeason> findByClubId(Long clubId);
+    List<ClubSeason> findBySeasonId(Long seasonId);
 }

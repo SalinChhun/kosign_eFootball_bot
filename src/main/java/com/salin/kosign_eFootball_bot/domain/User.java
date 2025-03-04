@@ -3,10 +3,7 @@ package com.salin.kosign_eFootball_bot.domain;
 import com.salin.kosign_eFootball_bot.security.token.Token;
 import com.salin.kosign_eFootball_bot.security.user.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,12 +11,13 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user_tb")
+@Getter
+@Setter
 public class User implements UserDetails {
     @Id
     @GeneratedValue

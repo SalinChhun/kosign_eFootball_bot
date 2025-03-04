@@ -62,7 +62,9 @@ public class SecurityConfiguration {
                                         "/configuration/security",
                                         "/swagger-ui/**",
                                         "/webjars/**",
-                                        "/swagger-ui.html"
+                                        "/swagger-ui.html",
+                                        "/api/v1/clubs",
+                                        "/api/v1/seasons"
                                 ).permitAll()
                                 .requestMatchers(
                                         "/api/v1/users/**"
@@ -74,11 +76,11 @@ public class SecurityConfiguration {
                                 .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
                                 .requestMatchers(DELETE, "/api/v1/admin/**").hasAnyAuthority(ADMIN_DELETE.getPermission())
 
-                                .requestMatchers("/api/v1/season").hasAnyRole(ADMIN.name(), MANAGER.name())
-                                .requestMatchers(GET, "/api/v1/season/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-                                .requestMatchers(POST, "/api/v1/season/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-                                .requestMatchers(PUT, "/api/v1/season/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-                                .requestMatchers(DELETE, "/api/v1/season/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
+
+//                                .requestMatchers("/api/v1/season/**").hasRole("ADMIN")
+                                .requestMatchers(POST, "/api/v1/season/**").hasAnyAuthority(ADMIN_CREATE.getPermission(), MANAGER_CREATE.getPermission())
+                                .requestMatchers(PUT, "/api/v1/season/{seasonId}").hasAnyAuthority(ADMIN_UPDATE.getPermission(), MANAGER_UPDATE.getPermission())
+                                .requestMatchers(DELETE, "/api/v1/season/{seasonId}").hasAnyAuthority(ADMIN_DELETE.getPermission(), MANAGER_DELETE.getPermission())
 
                                 .anyRequest()
                                 .authenticated()

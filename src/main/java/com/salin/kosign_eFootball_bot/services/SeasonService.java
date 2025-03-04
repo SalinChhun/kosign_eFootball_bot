@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface SeasonService {
 
-    public void createSeason(String seasonName);
+    void createSeason(String seasonName);
 
-    public List<Season> getSeasons();
+    List<Season> getSeasons();
 
-    public void updateSeason(Long seasonId, String seasonName);
+    void updateSeason(Long seasonId, String seasonName);
 
-    public void deleteSeason(Long seasonId);
+    void deleteSeason(Long seasonId);
 }

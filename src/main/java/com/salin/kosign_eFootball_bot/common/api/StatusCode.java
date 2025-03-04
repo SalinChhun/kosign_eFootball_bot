@@ -21,6 +21,7 @@ public enum StatusCode {
     INVALID_PINCODE(404, "Invalid pin code"),
     EXPIRED_PINCODE(404, "PIN code has expired."),
     PINCODE_REQUIRED(404, "You need to verify pin code first"),
+    SEASON_CAN_NOT_DELETE(404, "This season is in use, cannot be deleted"),
     SEASON_NOT_FOUND(404, "Season is not found");
 
     private final String message;
