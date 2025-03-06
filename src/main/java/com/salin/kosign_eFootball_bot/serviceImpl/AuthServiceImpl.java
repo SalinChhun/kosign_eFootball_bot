@@ -64,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        var refreshToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
         return LoginResponse.builder()
                 .accessToken(jwtToken)
@@ -97,7 +97,7 @@ public class AuthServiceImpl implements AuthService {
 
 
         var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        var refreshToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return LoginResponse.builder()
@@ -119,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
                     .build();
             var savedUser = repository.save(user);
             var jwtToken = jwtService.generateToken(user);
-            var refreshToken = jwtService.generateRefreshToken(user);
+            var refreshToken = jwtService.generateToken(user);
             saveUserToken(savedUser, jwtToken);
             return LoginResponse.builder()
                     .accessToken(jwtToken)

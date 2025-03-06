@@ -1,5 +1,6 @@
 package com.salin.kosign_eFootball_bot.security.config;
 
+import com.salin.kosign_eFootball_bot.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -37,7 +38,14 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> extraClaims = new HashMap<>();
+
+        // Add role to claims if UserDetails is an instance of User
+        if (userDetails instanceof User user) {
+            extraClaims.put("role", user.getRole().name());
+        }
+
+        return generateToken(extraClaims, userDetails);
     }
 
     public String generateToken(
@@ -45,12 +53,6 @@ public class JwtService {
             UserDetails userDetails
     ) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
-    }
-
-    public String generateRefreshToken(
-            UserDetails userDetails
-    ) {
-        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
 
     private String buildToken(

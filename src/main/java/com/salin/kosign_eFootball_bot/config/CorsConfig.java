@@ -1,4 +1,4 @@
-package com.salin.kosign_eFootball_bot.security.config;
+package com.salin.kosign_eFootball_bot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
