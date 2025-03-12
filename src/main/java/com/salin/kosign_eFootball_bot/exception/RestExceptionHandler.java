@@ -4,6 +4,7 @@ import com.salin.kosign_eFootball_bot.common.api.ApiResponse;
 import com.salin.kosign_eFootball_bot.common.api.ApiStatus;
 import com.salin.kosign_eFootball_bot.common.api.EmptyJsonResponse;
 import com.salin.kosign_eFootball_bot.common.api.StatusCode;
+import com.salin.kosign_eFootball_bot.utils.AppLogManager;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
@@ -26,13 +27,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.net.ConnectException;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 @Component
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -44,14 +48,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public Object handleIllegalArgumentException(IllegalArgumentException ex) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
         return buildResponseEntity(new ApiStatus(BAD_REQUEST.value(), ex.getMessage()));
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public Object handleTimeoutException(IllegalStateException ex) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
         if(ex.getMessage().contains("Timeout on blocking")){
             return buildResponseEntity(new ApiStatus(HttpStatus.REQUEST_TIMEOUT.value(), "Request timeout"));
@@ -62,24 +66,23 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
 
-//    @ExceptionHandler(WebClientRequestException.class)
-//    public Object handleRestClientException(WebClientRequestException ex) {
-////        AppLogManager.error(ex);
-//
-//        if(ex.getCause() instanceof ConnectException){
-//            return buildResponseEntity(new ApiStatus(500, "Connection refused"));
-//        }
-//
-//        return buildResponseEntity(new ApiStatus(500, "Unexpected error occurred"));
-//    }
+    @ExceptionHandler(WebClientRequestException.class)
+    public Object handleRestClientException(WebClientRequestException ex) {
+        AppLogManager.error(ex);
+
+        if(ex.getCause() instanceof ConnectException){
+            return buildResponseEntity(new ApiStatus(500, "Connection refused"));
+        }
+
+        return buildResponseEntity(new ApiStatus(500, "Unexpected error occurred"));
+    }
 
     @ExceptionHandler(RestClientException.class)
     public Object handleRestClientException(RestClientException ex) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
         return buildResponseEntity(new ApiStatus(HttpStatus.BAD_GATEWAY.value(), StringUtils.defaultIfBlank(ex.getMessage(), "Unexpected error occurred")));
     }
-
 
 
     /**
@@ -93,7 +96,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
         StringBuilder builder = new StringBuilder();
 
@@ -116,7 +119,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
         StringBuilder sb = new StringBuilder();
         for (var error : ex.getBindingResult().getFieldErrors()) {
@@ -137,7 +140,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleConstraintViolation(
             ConstraintViolationException ex) {
 
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
 //        String errorMessage = MessageHelper.getMessage("Validation.error",MessageHelper.getLocale(requests));
 //
@@ -158,7 +161,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleEntityNotFound(
             EntityNotFoundException ex) {
 
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
         return buildResponseEntity(new ApiStatus(NOT_FOUND.value(), ex.getMessage()));
 
@@ -168,7 +171,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleValidationException(
             ValidationException ex) {
 
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
         return buildResponseEntity(new ApiStatus(BAD_REQUEST.value(),ex.getMessage()));
 
     }
@@ -186,7 +189,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
 //        String error = "Malformed JSON request";
 //        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, error, ex);
@@ -205,7 +208,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
         String error = "Error writing JSON output";
 
         return buildResponseEntity(new ApiStatus(status.value(),error));
@@ -235,7 +238,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-//                AppLogManager.error(ex);
+        AppLogManager.error(ex);
 //        System.out.println(ex);
 //
 //        apiError.setMessage(String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
@@ -244,7 +247,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(new ApiStatus(status.value(),String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL())));
     }
 
-        /**
+    /**
      * Handle DataIntegrityViolationException, inspects the cause for different DB causes.
      *
      * @param ex the DataIntegrityViolationException
@@ -252,7 +255,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     protected ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 
         if (ex.getCause() instanceof ConstraintViolationException) {
             return buildResponseEntity(new ApiStatus(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()));
@@ -273,7 +276,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, WebRequest request) {
 
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 //        System.out.println(ex);
 //        ApiError apiError = new ApiError(BAD_REQUEST);
 //
@@ -293,12 +296,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<Object> handleBusinessException(final BusinessException ex) {
 
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
         StatusCode statusCode = ex.getErrorCode();
         ApiStatus apiStatus = new ApiStatus(statusCode);
         apiStatus.setMessage(StringUtils.defaultIfBlank(ex.getMessage(), statusCode.getMessage()));
 //        apiStatus.setMessage(MessageHelper.getMessage(String.valueOf(statusCode.getCode()), statusCode.getMessage()));
-        return buildResponseEntity(apiStatus, ex.getBody());
+        return buildResponseEntity(apiStatus, ex.getBody(), statusCode.getHttpCode());
 
     }
 
@@ -310,7 +313,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(Throwable.class)
     protected ResponseEntity<Object> handleThrowable(Throwable ex) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
 //        apiError.setMessage(ex.getMessage());
 //        apiError.setDebugMessage(ExceptionUtils.getStackTrace(ex));
 
@@ -320,7 +323,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
-//        AppLogManager.error(ex);
+        AppLogManager.error(ex);
         return buildResponseEntity(new ApiStatus(statusCode.value(), "Internal Server Error"));
     }
 
@@ -330,9 +333,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiStatus.getCode()));
     }
 
-    public ResponseEntity<Object> buildResponseEntity(ApiStatus apiStatus, Object data) {
+    public ResponseEntity<Object> buildResponseEntity(ApiStatus apiStatus, Object data, int httpCode) {
         ApiResponse<Object> apiResponse = new ApiResponse<>(apiStatus, data == null ? new EmptyJsonResponse() : data);
 
-        return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiStatus.getCode()));
+        return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(httpCode));
     }
 }
