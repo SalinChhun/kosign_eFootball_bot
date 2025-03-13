@@ -23,9 +23,12 @@
 #ENTRYPOINT ["java", "-jar", "app.jar"]
 
 FROM ubuntu:latest AS build
+
 RUN apt-get update
 RUN apt-get install openjdk-21-jdk -y
 COPY . .
+# Add this line to make gradlew executable
+RUN chmod +x ./gradlew
 RUN ./gradlew bootJar --no-daemon
 
 FROM gradle:8.6-jdk21
