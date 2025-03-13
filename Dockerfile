@@ -28,14 +28,10 @@ RUN apt-get update
 RUN apt-get install openjdk-21-jdk -y
 COPY . .
 RUN chmod +x ./gradlew
-# Run with --info to see more details about where the JAR is being created
-RUN ./gradlew bootJar --no-daemon --info
-
-# Try to locate the JAR file
-RUN find . -name "*.jar"
+RUN ./gradlew bootJar --no-daemon
 
 FROM gradle:8.6-jdk21
 EXPOSE 8080
-# Update this path to match where your JAR is actually being built
-COPY --from=build /build/libs/*.jar app.jar
+# Updated path to match your actual JAR location
+COPY --from=build /build/libs/telegram-bot-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
