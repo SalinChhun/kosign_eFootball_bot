@@ -22,16 +22,16 @@
 ## Command to start the Spring Boot app
 #ENTRYPOINT ["java", "-jar", "app.jar"]
 
-FROM ubuntu:latest AS build
-
-RUN apt-get update
-RUN apt-get install openjdk-21-jdk -y
+# Stage 1: Build the application using bootJar
+FROM gradle:8.6-jdk21 AS build
+WORKDIR /app
 COPY . .
-RUN chmod +x ./gradlew
-RUN ./gradlew bootJar --no-daemon
+RUN gradle bootJar --no-daemon
 
-FROM gradle:8.6-jdk21
+# Stage 2: Run the application
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
 EXPOSE 8080
-# Updated path to match your actual JAR location
-COPY --from=build /build/libs/telegram-bot-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/build/libs/telegram-bot-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
